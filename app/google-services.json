@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513316267935",
+    "project_id": "residy-3360d",
+    "storage_bucket": "residy-3360d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513316267935:android:8375aad7605b454f09bfaa",
+        "android_client_info": {
+          "package_name": "com.example.residy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz4QuUZ5HyiBhGIF7F2ofrIGyQldwqAwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
