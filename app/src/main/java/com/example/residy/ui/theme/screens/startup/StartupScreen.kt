@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -56,9 +57,6 @@ fun StartupScreen(navController: NavController) {
     val badgeTextColor = Color.White // Text color for the badge
 
 
-
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -97,134 +95,107 @@ fun StartupScreen(navController: NavController) {
                     )
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    Box() {
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.Center) // Center the icons horizontally
-                                .padding(16.dp) // Adjust padding around icons
-                        ) { // Circle with Icon
-                            Box(
-                                modifier = Modifier
-                                    .size(80.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0x80000000)) // translucent color
-                                    .padding(20.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.img_12), // Replace with your icon
-                                    contentDescription = "Custom Icon",
-                                    tint = Color.White,
-                                    modifier = Modifier.size(40.dp)
-                                )
-                            }
-
-                            // Text beneath the icon
-                            Text(
-                                text = "Custom Icon",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black,
-                                modifier = Modifier.padding(top = 8.dp)
-                            )
-                        }
-
-                        // Notification Badge
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .offset(x = 8.dp, y = (-8).dp)
-                                .size(20.dp)
-                                .clip(CircleShape)
-                                .background(Color.Red),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "3", // Example notification count
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.size(16.dp))
-                    // Second Icon
-                    // Circle with Icon
-                    Box(
+                    Row(
                         modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                            .background(Color(0x80000000)) // translucent color
-                            .padding(20.dp),
-                        contentAlignment = Alignment.Center
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.img_11), // Replace with your icon
-                            contentDescription = "Custom Icon",
-                            tint = Color.White,
-                            modifier = Modifier.size(40.dp)
+                        CustomIconWithBadge(
+                            iconResId = R.drawable.img_11, // Replace with your first icon
+                            text = "Icon 1",
+                            notificationCount = 2
                         )
-                    }
-
-                    // Text beneath the icon
-                    Text(
-                        text = "Custom Icon",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-                    Spacer(modifier = Modifier.size(16.dp))
-                    // Third Icon
-                    Spacer(modifier = Modifier.size(16.dp))
-
-                    // Circle with Icon
-                    Box(
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clip(CircleShape)
-                            .background(Color(0x80000000)) // translucent color
-                            .padding(20.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.img_13), // Replace with your icon
-                            contentDescription = "Custom Icon",
-                            tint = Color.White,
-                            modifier = Modifier.size(40.dp)
+                        CustomIconWithBadge(
+                            iconResId = R.drawable.img_12, // Replace with your second icon
+                            text = "Icon 2",
+                            notificationCount = 7
                         )
-                    }
-
-                    // Text beneath the icon
-                    Text(
-                        text = "Custom Icon",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
-
-                    // Notification Badge
-                    Box(
-                        modifier = Modifier
-                                 .offset(x = 8.dp, y = (-8).dp)
-                            .size(20.dp)
-                            .clip(CircleShape)
-                            .background(Color.Red),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "3", // Example notification count
-                            color = Color.White,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Bold
+                        CustomIconWithBadge(
+                            iconResId = R.drawable.img_13, // Replace with your second icon
+                            text = "Icon 2",
+                            notificationCount = 7
                         )
+                        CustomIconWithBadge(
+                            iconResId = R.drawable.img_14, // Replace with your second icon
+                            text = "Icon 2",
+                            notificationCount = 7
+                        )
+
+
+
+
+
+
+
                     }
-
-
                 }
 
+
+
+
+
+
+
+            }
+            }
+        }
+    }
+
+@Composable
+fun CustomIconWithBadge(iconResId: Int, text: String, notificationCount: Int) {
+    Box(
+        modifier = Modifier
+            .wrapContentSize()
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            // Circle with Icon
+            Box(
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .background(Color(0x50000000)) // translucent color
+                    .padding(20.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = iconResId),
+                    contentDescription = text,
+                    tint = Color.White,
+                    modifier = Modifier.size(40.dp)
+                )
+            }
+
+            // Text beneath the icon
+            Text(
+                text = text,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+
+        // Notification Badge
+        if (notificationCount > 0) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .offset(x = 8.dp, y = (-8).dp)
+                    .size(20.dp)
+                    .clip(CircleShape)
+                    .background(Color.Red),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = notificationCount.toString(),
+                    color = Color.White,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
     }
