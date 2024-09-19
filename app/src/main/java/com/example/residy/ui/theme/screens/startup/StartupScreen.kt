@@ -13,9 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -31,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -45,6 +49,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.residy.R
+import com.example.residy.navigation.ROUT_HOME
 
 
 @Composable
@@ -60,7 +65,7 @@ fun StartupScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .paint(painterResource(id = R.drawable.img_6), contentScale = ContentScale.FillBounds),
+            .paint(painterResource(id = R.drawable.img_10), contentScale = ContentScale.FillHeight),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -103,33 +108,52 @@ fun StartupScreen(navController: NavController) {
                     ) {
                         CustomIconWithBadge(
                             iconResId = R.drawable.img_11, // Replace with your first icon
-                            text = "Icon 1",
+                            text = "Bedrooms",
                             notificationCount = 2
                         )
                         CustomIconWithBadge(
                             iconResId = R.drawable.img_12, // Replace with your second icon
-                            text = "Icon 2",
+                            text = "bathrooms",
                             notificationCount = 7
                         )
                         CustomIconWithBadge(
                             iconResId = R.drawable.img_13, // Replace with your second icon
-                            text = "Icon 2",
-                            notificationCount = 7
+                            text = "Gym",
+                            notificationCount = 1
                         )
                         CustomIconWithBadge(
                             iconResId = R.drawable.img_14, // Replace with your second icon
-                            text = "Icon 2",
+                            text = "Parking",
                             notificationCount = 7
                         )
 
 
+                    }
+                    Column {
+                        Row {
+                            Text(
+                                text = "ksh 55,000",
+                                fontSize = 25.sp,
+                                fontFamily = FontFamily.Default
+                            )
+                            Spacer(modifier = Modifier.width(20.dp))
+                            Button(
+                                onClick = { navController.navigate(ROUT_HOME) },
+                                colors = ButtonDefaults.buttonColors(White),
 
+                            ) {
+                                Text(
+                                    text = "Book Now",
+                                    color = Color.Black,
+                                    fontWeight = FontWeight.Black
 
+                                )
+                            }
 
-
-
+                        }
                     }
                 }
+
 
 
 
