@@ -73,6 +73,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.residy.data.ProductViewModel
 import com.example.residy.models.Product
 import com.example.residy.navigation.ADD_PRODUCTS_URL
+import com.example.residy.ui.theme.blue
+import com.example.residy.ui.theme.pastblue
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -95,7 +97,7 @@ fun ViewProductsScreen(navController:NavHostController) {
         Scaffold(
             bottomBar = {
                 NavigationBar (
-                    containerColor = Color.LightGray,
+                    containerColor = pastblue,
                     contentColor = Color.Black){
                     bottomNavItems.forEachIndexed { index, bottomNavItem ->
                         NavigationBarItem(
@@ -146,7 +148,7 @@ fun ViewProductsScreen(navController:NavHostController) {
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = { /*TODO*/ },
-                    containerColor = Color.LightGray) {
+                    containerColor = blue) {
                     IconButton(onClick = {
                         navController.navigate(ADD_PRODUCTS_URL)
                     }) {
@@ -173,7 +175,7 @@ fun ViewProductsScreen(navController:NavHostController) {
                         items(products){
                             ProductItem(
                                 name = it.name,
-                                quantity = it.quantity,
+                                type = it.type,
                                 price = it.price,
                                 phone = it.phone,
                                 id = it.id,
@@ -198,7 +200,7 @@ fun ViewProductsScreen(navController:NavHostController) {
 //carries how you see the images
 
 @Composable
-fun ProductItem(name:String, quantity:String, price:String,phone:String, id:String,
+fun ProductItem(name:String, type:String, price:String,phone:String, id:String,
                 navController:NavHostController,
                 productRepository:ProductViewModel, productImage:String) {
 
@@ -242,7 +244,7 @@ fun ProductItem(name:String, quantity:String, price:String,phone:String, id:Stri
                         )
 
 
-                        Text(text = "Quantity : $quantity",
+                        Text(text = "Quantity : $type",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Medium,
                             fontFamily = FontFamily.Default,

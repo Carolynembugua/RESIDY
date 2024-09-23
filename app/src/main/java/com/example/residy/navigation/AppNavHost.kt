@@ -21,7 +21,7 @@ import com.example.residy.ui.theme.screens.startup.StartupScreen
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination:String = ROUT_STARTUP
+    startDestination:String = ADD_PRODUCTS_URL
 ) {
     NavHost(
         navController = navController,

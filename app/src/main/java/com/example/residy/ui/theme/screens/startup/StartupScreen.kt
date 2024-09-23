@@ -57,9 +57,9 @@ fun StartupScreen(navController: NavController) {
     val translucentColor = Color(0x90FFFFFF) // White with 50% opacity
     val iconColor = Color.Black // Opaque black for the icon
     val circleBackgroundColor = Color.White // Solid color for the circle
-    val badgeColor = Color.Red // Background color for the badge
+    val badgeColor = Color.White // Background color for the badge
     // Define a color for the badge text
-    val badgeTextColor = Color.White // Text color for the badge
+    val badgeTextColor = Color.Black // Text color for the badge
 
 
     Column(
@@ -92,6 +92,21 @@ fun StartupScreen(navController: NavController) {
                         fontSize = 25.sp
                     )
                     Text(
+                        text = "Opulence Apartment",
+                        modifier = Modifier
+                            .padding(25.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 25.sp
+                    )
+                    Text(
+                        text = "Kilimani,Nairobi",
+                        modifier = Modifier
+                            .padding(15.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 15.sp
+                    )
+
+                    Text(
                         text = "This app aims to help you find your dream house at affordable prices ",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,
@@ -114,17 +129,17 @@ fun StartupScreen(navController: NavController) {
                         CustomIconWithBadge(
                             iconResId = R.drawable.img_12, // Replace with your second icon
                             text = "bathrooms",
-                            notificationCount = 7
+                            notificationCount = 2
                         )
                         CustomIconWithBadge(
                             iconResId = R.drawable.img_13, // Replace with your second icon
                             text = "Gym",
-                            notificationCount = 1
+                            notificationCount = 0
                         )
                         CustomIconWithBadge(
                             iconResId = R.drawable.img_14, // Replace with your second icon
                             text = "Parking",
-                            notificationCount = 7
+                            notificationCount = 0
                         )
 
 
@@ -211,12 +226,12 @@ fun CustomIconWithBadge(iconResId: Int, text: String, notificationCount: Int) {
                     .offset(x = 8.dp, y = (-8).dp)
                     .size(20.dp)
                     .clip(CircleShape)
-                    .background(Color.Red),
+                    .background(Color.White),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = notificationCount.toString(),
-                    color = Color.White,
+                    color = Color.Black,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold
                 )

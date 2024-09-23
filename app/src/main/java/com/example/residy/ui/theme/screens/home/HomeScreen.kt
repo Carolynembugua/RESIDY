@@ -3,8 +3,6 @@ package com.example.residy.ui.theme.screens.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +24,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -58,13 +58,18 @@ import com.example.residy.R
 import androidx.navigation.compose.rememberNavController
 import com.example.residy.navigation.ROUT_LOGIN
 import com.example.residy.ui.theme.screens.products.bottomNavItems
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import com.example.residy.navigation.ROUT_DETAILS
 import com.example.residy.navigation.ROUT_HOME
+import com.example.residy.navigation.ROUT_SPLASH
+import com.example.residy.navigation.ROUT_STARTUP
 import com.example.residy.ui.theme.blue
 import com.example.residy.ui.theme.pastblue
 
@@ -76,24 +81,35 @@ fun HomeScreen(navController:NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .paint(painterResource(id = R.drawable.img_6), contentScale = ContentScale.FillBounds),
+            ,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ){
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(
+            text = "RESIDY",
+
+
+        )
 
         Spacer(modifier = Modifier.size(10.dp))
 
         //Start of searchbar
         var search by remember { mutableStateOf("") }
+        Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
             value = search,
             onValueChange = {search = it},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp)
-                .height(100.dp)
-            ,
+                .padding(10.dp)
+                .height(100.dp),// Increase the height of the TextField
+            shape = RoundedCornerShape(16.dp), // Make the borders curved with a corner radius
+            textStyle = LocalTextStyle.current.copy(
+                fontSize = 18.sp),
+
 
             leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "search")},// FOR ICON TO BE AT BEGINNING
             placeholder = {
@@ -113,7 +129,7 @@ fun HomeScreen(navController:NavController){
         Scaffold(
             bottomBar = {
                 NavigationBar (
-                    containerColor = Color.LightGray,
+                    containerColor = Color.White,
                     contentColor = Color.Black){
                     bottomNavItems.forEachIndexed { index, bottomNavItem ->
                         NavigationBarItem(
@@ -169,13 +185,21 @@ fun HomeScreen(navController:NavController){
             content = @Composable{
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .paint(painterResource(id = R.drawable.img_6), contentScale = ContentScale.FillBounds),
-
+                        .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
+                }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
 
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Add the layered cards below the centered app bar
+                    LayeredCards()
                 }
 
             },
@@ -184,6 +208,109 @@ fun HomeScreen(navController:NavController){
 
 
             )
+    }
+}
+@Composable
+fun LayeredCards() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        CardItem(
+            modifier = Modifier
+                .offset(x = (-40).dp, y = 40.dp),
+            backgroundColor =  Color(0xFFE3F2FD)
+        )
+        CardItem(
+            modifier = Modifier
+                .offset(x = (-20).dp, y = 20.dp),
+            backgroundColor = Color(0xFFC5CAE9)
+        )
+        CardItem(
+            modifier = Modifier
+                .offset(x = 0.dp, y = 0.dp),
+            backgroundColor = Color(0xFF3F51B5),
+            isMainCard = true
+
+        )
+    }
+}
+
+
+
+@Composable
+fun CardItem(
+    modifier: Modifier = Modifier,
+    backgroundColor: Color,
+    isMainCard: Boolean = false
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth(0.9f)
+            .height(300.dp)
+            .clip(RoundedCornerShape(24.dp)),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            if (isMainCard) {
+                Box(modifier = Modifier.fillMaxSize(),
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.img_10),
+                        contentDescription = "" ,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(24.dp)) // Clip the image to match the card shape
+                    )
+
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Opulence ",
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier.padding(top = 16.dp),
+                        textAlign = TextAlign.Start
+                    )
+                    Text(
+                        text = "Apartments ",
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        textAlign = TextAlign.Left
+
+                    )
+                    Text(
+                        text = "$5,680 / Month",
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Button(
+                        onClick = { },
+                        modifier = Modifier.padding(16.dp),
+                        colors = ButtonDefaults.buttonColors(blue)
+                    ) {
+                        Text(
+                            text = "Take a look"
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

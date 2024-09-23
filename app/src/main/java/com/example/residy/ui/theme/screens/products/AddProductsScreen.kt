@@ -86,7 +86,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.residy.data.ProductViewModel
 import com.example.residy.navigation.ADD_PRODUCTS_URL
 import com.example.residy.navigation.ROUT_HOME
+import com.example.residy.ui.theme.ble
+import com.example.residy.ui.theme.blue
 import com.example.residy.ui.theme.orange
+import com.example.residy.ui.theme.pastblue
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -104,7 +107,7 @@ fun AddProductsScreen(navController:NavHostController){
         Scaffold(
             bottomBar = {
                 NavigationBar (
-                    containerColor = Color.LightGray,
+                    containerColor = (pastblue),
                     contentColor = Color.Black){
                     bottomNavItems.forEachIndexed { index, bottomNavItem ->
                         NavigationBarItem(
@@ -150,7 +153,7 @@ fun AddProductsScreen(navController:NavHostController){
                        text = "Bookings",
                        fontFamily = FontFamily.SansSerif,
                        fontSize = 30.sp) },
-                   colors = TopAppBarDefaults.mediumTopAppBarColors(orange),
+                   colors = TopAppBarDefaults.mediumTopAppBarColors(blue),
 
                    navigationIcon = {
                        IconButton(onClick = { navController.navigate(ROUT_HOME )}) {
@@ -165,7 +168,7 @@ fun AddProductsScreen(navController:NavHostController){
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = { /*TODO*/ },
-                    containerColor = Color.LightGray
+                    containerColor = pastblue
                 ) {
                     IconButton(onClick = {
                         navController.navigate(ADD_PRODUCTS_URL)
@@ -201,13 +204,14 @@ fun AddProductsScreen(navController:NavHostController){
                         //End of Main Card
 
 
-                        Spacer(modifier = Modifier.height(50.dp))
+                        Spacer(modifier = Modifier.height(70.dp))
 
                         Text(
                             text = "Upload Here!",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily.SansSerif
+                            fontFamily = FontFamily.SansSerif,
+                            modifier = Modifier.padding(15.dp)
                         )
 
                         var productName by remember { mutableStateOf("") }
@@ -230,16 +234,16 @@ fun AddProductsScreen(navController:NavHostController){
 
                         // Start of Text Field with a dropdown
                         var mExpanded by remember { mutableStateOf(false) }
-                        val options = listOf("250g", "500g", "1 kg")
-                        var productQuantity by remember { mutableStateOf("") }
+                        val options = listOf("apartment", "bungalow", "maisonette")
+                        var productType by remember { mutableStateOf("") }
                         var mTextFieldSize by remember { mutableStateOf(Size.Zero) }
                         val icon =
                             if (mExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown
 
                         Column(Modifier.padding(20.dp)) {
                             OutlinedTextField(
-                                value = productQuantity,
-                                onValueChange = { productQuantity = it },
+                                value = productType,
+                                onValueChange = { productType = it },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .onGloballyPositioned { coordinates ->
@@ -262,7 +266,7 @@ fun AddProductsScreen(navController:NavHostController){
                                     DropdownMenuItem(
                                         text = { Text(text = label) },
                                         onClick = {
-                                            productQuantity = label
+                                            productType = label
                                             mExpanded = false
                                         })
 
@@ -304,7 +308,7 @@ fun AddProductsScreen(navController:NavHostController){
                             context,
                             navController,
                             productName.trim(),
-                            productQuantity.trim(),
+                            productType.trim(),
                             productPrice.trim(),
                             phone.trim()
                         )
@@ -399,7 +403,7 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: N
                     imagePicker.launch("image/*")
                 },
                 shape = RoundedCornerShape(5.dp),
-                colors = ButtonDefaults.buttonColors(Color.Gray)
+                colors = ButtonDefaults.buttonColors(pastblue)
             ) {
                 Text(
                     text = "Select Image"
@@ -416,7 +420,7 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: N
 
             },
                 shape = RoundedCornerShape(5.dp),
-                colors = ButtonDefaults.buttonColors(Color.Gray)) {
+                colors = ButtonDefaults.buttonColors(blue)) {
                 Text(text = "Upload")
             }
         }
