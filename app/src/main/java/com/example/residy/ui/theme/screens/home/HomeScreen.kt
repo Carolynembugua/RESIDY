@@ -109,6 +109,7 @@ fun HomeScreen(navController:NavController){
             shape = RoundedCornerShape(16.dp), // Make the borders curved with a corner radius
             textStyle = LocalTextStyle.current.copy(
                 fontSize = 18.sp),
+            singleLine = false,
 
 
             leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "search")},// FOR ICON TO BE AT BEGINNING
