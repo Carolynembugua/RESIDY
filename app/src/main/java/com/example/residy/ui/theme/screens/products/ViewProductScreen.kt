@@ -244,7 +244,7 @@ fun ProductItem(name:String, type:String, price:String,phone:String, id:String,
                         )
 
 
-                        Text(text = "Quantity : $type",
+                        Text(text = "Type : $type",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Medium,
                             fontFamily = FontFamily.Default,

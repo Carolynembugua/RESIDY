@@ -89,11 +89,12 @@ fun HomeScreen(navController:NavController){
 
         Text(
             text = "RESIDY",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Black,
 
 
         )
 
-        Spacer(modifier = Modifier.size(10.dp))
 
         //Start of searchbar
         var search by remember { mutableStateOf("") }
@@ -105,18 +106,22 @@ fun HomeScreen(navController:NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
-                .height(100.dp),// Increase the height of the TextField
+                .height(150.dp),// Increase the height of the TextField
             shape = RoundedCornerShape(16.dp), // Make the borders curved with a corner radius
             textStyle = LocalTextStyle.current.copy(
-                fontSize = 18.sp),
+                fontSize = 30.sp),
             singleLine = false,
 
 
-            leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "search")},// FOR ICON TO BE AT BEGINNING
+            trailingIcon = {
+                Icon(imageVector = Icons.Default.Search,
+                    contentDescription = "search",
+                    modifier = Modifier.size(40.dp)
+                )},// FOR ICON TO BE AT BEGINNING
             placeholder = {
                 Text(
                     text = " Find the perfect place ",
-                    fontSize = 25.sp,
+                    fontSize = 30.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = FontFamily.Monospace,
                     modifier = Modifier.padding(start = 10.dp, end = 10.dp)
@@ -218,6 +223,7 @@ fun LayeredCards() {
         modifier = Modifier.fillMaxSize(),
     ) {
         CardItem(
+
             modifier = Modifier
                 .offset(x = (-40).dp, y = 40.dp),
             backgroundColor =  Color(0xFFE3F2FD)
