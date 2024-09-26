@@ -86,9 +86,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.residy.data.ProductViewModel
 import com.example.residy.navigation.ADD_PRODUCTS_URL
 import com.example.residy.navigation.ROUT_HOME
-import com.example.residy.ui.theme.ble
 import com.example.residy.ui.theme.blue
-import com.example.residy.ui.theme.orange
 import com.example.residy.ui.theme.pastblue
 
 
@@ -249,7 +247,7 @@ fun AddProductsScreen(navController:NavHostController){
                                     .onGloballyPositioned { coordinates ->
                                         mTextFieldSize = coordinates.size.toSize()
                                     },
-                                label = { Text("Choose product quantity") },
+                                label = { Text("Choose housing type") },
                                 trailingIcon = {
                                     Icon(icon, "contentDescription",
                                         Modifier.clickable { mExpanded = !mExpanded })
@@ -369,7 +367,7 @@ data class BottomNavItem(
 
 
 @Composable
-fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: NavHostController, name:String, quantity:String, price:String,phone:String) {
+fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: NavHostController, name:String, type:String, price:String,phone:String) {
     var hasImage by remember { mutableStateOf(false) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -415,7 +413,7 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: N
             Button(onClick = {
                 //-----------WRITE THE UPLOAD LOGIC HERE---------------//
                 var productRepository = ProductViewModel(navController,context)
-                productRepository.uploadProduct(name, quantity, price,phone,imageUri!!)
+                productRepository.uploadProduct(name, type, price,phone,imageUri!!)
 
 
             },

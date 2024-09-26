@@ -2,7 +2,10 @@ package com.example.residy.ui.theme.screens.home
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,27 +18,21 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -44,7 +41,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -56,28 +52,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.residy.R
 import androidx.navigation.compose.rememberNavController
-import com.example.residy.navigation.ROUT_LOGIN
-import com.example.residy.ui.theme.screens.products.bottomNavItems
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import com.example.residy.navigation.ROUT_DETAILS
-import com.example.residy.navigation.ROUT_HOME
-import com.example.residy.navigation.ROUT_SPLASH
 import com.example.residy.navigation.ROUT_STARTUP
 import com.example.residy.ui.theme.blue
-import com.example.residy.ui.theme.pastblue
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun HomeScreen(navController:NavController){
+fun HomeScreen(navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -116,111 +103,160 @@ fun HomeScreen(navController:NavController){
             trailingIcon = {
                 Icon(imageVector = Icons.Default.Search,
                     contentDescription = "search",
-                    modifier = Modifier.size(40.dp)
-                )},// FOR ICON TO BE AT BEGINNING
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(end = 10.dp)
+                )},//leading FOR ICON TO BE AT BEGINNING
             placeholder = {
                 Text(
                     text = " Find the perfect place ",
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 40.sp,
+                    fontWeight = FontWeight.Black,
                     fontFamily = FontFamily.Monospace,
-                    modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                    modifier = Modifier.padding(start = 10.dp)
 
                 )
 
 
             }
+
         )
         var selected by remember { mutableIntStateOf(0) }
         Scaffold(
             bottomBar = {
-                NavigationBar (
-                    containerColor = Color.White,
-                    contentColor = Color.Black){
-                    bottomNavItems.forEachIndexed { index, bottomNavItem ->
-                        NavigationBarItem(
-                            selected = index == selected,
-                            onClick = {
-                                selected = index
-                                navController.navigate(bottomNavItem.route)
-                            },
-                            icon = {
-                                BadgedBox(
-                                    badge = {
-                                        if (bottomNavItem.badges != 0) {
-                                            Badge (containerColor = (pastblue)){
-                                                Text(text = bottomNavItem.badges.toString())
-                                            }
-                                        } else if (bottomNavItem.hasNews) {
-                                            Badge()
-                                        }
-                                    }
-                                ) {
-                                    Icon(imageVector =
-                                    if (index == selected)
-                                        bottomNavItem.selectedIcon
-                                    else
-                                        bottomNavItem.unselectedIcon,
-                                        contentDescription = bottomNavItem.title)
-                                }
-
-                            },       label = {
-                                Text(text = bottomNavItem.title)
-                            }
-                        )
-                    }
-                }
+                BottomAppBar() // Custom Bottom App Bar
             },
-
-
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { /*TODO*/ },
-                    containerColor = (blue)) {
-                    IconButton(onClick = {
-                        navController.navigate(ROUT_LOGIN)
-                    }) {
-                        Icon(imageVector = Icons.Default.Add,
-                            contentDescription = "menu")
-                    }
-                }
-            },
-
-
-            //Content Section
-            content = @Composable{
-                Column(
+            content = { paddingValues ->
+                Box(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .fillMaxSize()
+                        .padding(paddingValues),
+                    contentAlignment = Alignment.Center // Center content in Box
                 ) {
+                    // Main content centered in the screen
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        // Middle App Bar (formerly the Top Bar)
+                        CenteredAppBar()
 
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Add the layered cards below the centered app bar
+                        LayeredCards()
+                    }
                 }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
+            }
+        )
+        Spacer(modifier = Modifier.height(20.dp))
 
-                    Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+@Composable
+fun CenteredAppBar() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        // Nearby, Recommend, Share Bar
+        TopBarItem(text = "Nearby", selected = true)
+        TopBarItem(text = "Recommend", selected = false)
+        TopBarItem(text = "Share", selected = false)
+    }
+}
 
-                    // Add the layered cards below the centered app bar
-                    LayeredCards()
-                }
+@Composable
+fun TopBarItem(text: String, selected: Boolean) {
+    Column(
 
-            },
-
-
-
-
+        modifier = Modifier.clickable { /* Handle click */ }
+    ) {
+        Text(
+            text = text,
+            color = if (selected) Color.Black else Color.Gray,
+            fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+            fontSize = 16.sp
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        if (selected) {
+            Box(
+                modifier = Modifier
+                    .width(24.dp)
+                    .height(4.dp)
+                    .clip(RoundedCornerShape(2.dp))
+                    .background(Color.Black)
             )
+        }
+    }
+}
+
+@Composable
+fun BottomAppBar() {
+    val mContext = LocalContext.current
+    NavigationBar(
+        containerColor = Color.White,
+        contentColor = Color.Black
+    ) {
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Outlined.Info,
+                    contentDescription = "Nearby",
+                    tint = Color.Black
+                )
+            },
+            selected = true,
+            onClick = {  }
+        )
+
+        Box(
+            modifier = Modifier
+                .size(60.dp)
+                .padding(8.dp)
+                .clip(CircleShape)
+                .background(Color.Black)
+                .clickable { /* Handle click */ },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Residy",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp
+            )
+        }
+
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Share,
+                    contentDescription = "Share",
+                    tint = Color.Black
+                )
+            },
+            selected = false,
+            onClick = {
+                val shareIntent= Intent(Intent.ACTION_SEND)
+                shareIntent.type="text/plain"
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this is a cool content")
+                mContext.startActivity(Intent.createChooser(shareIntent, "Share"))
+            }
+        )
     }
 }
 @Composable
 fun LayeredCards() {
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+
+
     ) {
         CardItem(
 
@@ -247,6 +283,7 @@ fun LayeredCards() {
 
 @Composable
 fun CardItem(
+
     modifier: Modifier = Modifier,
     backgroundColor: Color,
     isMainCard: Boolean = false
@@ -307,7 +344,10 @@ fun CardItem(
 
                     Spacer(modifier = Modifier.height(10.dp))
                     Button(
-                        onClick = { },
+                        onClick = {
+
+
+                        },
                         modifier = Modifier.padding(16.dp),
                         colors = ButtonDefaults.buttonColors(blue)
                     ) {
@@ -329,6 +369,6 @@ fun CardItem(
 @Preview(showBackground = true)
 fun HomeScreenPreview(){
 
-    HomeScreen(navController = rememberNavController())
+    HomeScreen(rememberNavController())
 
 }

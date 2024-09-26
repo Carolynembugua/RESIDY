@@ -1,6 +1,7 @@
 package com.example.residy.ui.theme.screens.startup
 
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontFamily
@@ -48,6 +50,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.example.residy.R
 import com.example.residy.navigation.ROUT_HOME
 
@@ -60,6 +63,8 @@ fun StartupScreen(navController: NavController) {
     val badgeColor = Color.White // Background color for the badge
     // Define a color for the badge text
     val badgeTextColor = Color.Black // Text color for the badge
+    val mContext = LocalContext.current
+
 
 
     Column(
@@ -94,20 +99,21 @@ fun StartupScreen(navController: NavController) {
                     Text(
                         text = "Opulence Apartment",
                         modifier = Modifier
-                            .padding(25.dp),
+                            .padding(start = 25.dp, bottom = 20.dp),
                         textAlign = TextAlign.Center,
                         fontSize = 25.sp
                     )
                     Text(
                         text = "Kilimani,Nairobi",
                         modifier = Modifier
-                            .padding(15.dp),
+                            .padding(start = 25.dp, bottom = 15.dp),
                         textAlign = TextAlign.Center,
-                        fontSize = 15.sp
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Black
                     )
 
                     Text(
-                        text = "This app aims to help you find your dream house at affordable prices ",
+                        text = "This apartments are situated near social amenities such as a school and a hospital  ",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.SemiBold,
                         fontFamily = FontFamily.Serif,
@@ -145,15 +151,24 @@ fun StartupScreen(navController: NavController) {
 
                     }
                     Column {
-                        Row {
+                        Row(
+                            modifier = Modifier.padding(top = 10.dp, start = 10.dp)
+                        ){
                             Text(
                                 text = "ksh 55,000",
                                 fontSize = 25.sp,
-                                fontFamily = FontFamily.Default
+                                fontFamily = FontFamily.Default,
+                                modifier = Modifier.padding(start = 20.dp, top = 10.dp )
+
+
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                             Button(
-                                onClick = { navController.navigate(ROUT_HOME) },
+                                onClick = {
+                                    val callIntent= Intent(Intent.ACTION_DIAL)
+                                    callIntent.data="tel:0705562115".toUri()
+                                    mContext.startActivity(callIntent)
+                                          },
                                 colors = ButtonDefaults.buttonColors(White),
 
                             ) {

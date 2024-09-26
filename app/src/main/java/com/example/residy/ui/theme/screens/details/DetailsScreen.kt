@@ -1,6 +1,7 @@
 package com.example.residy.ui.theme.screens.details
 
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -47,10 +48,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -64,6 +67,7 @@ import com.example.residy.ui.theme.screens.products.bottomNavItems
 
 @Composable
 fun DetailsScreen(navController: NavController){
+
     Column(
         modifier = Modifier.fillMaxSize()
     ){
@@ -113,7 +117,8 @@ fun DetailsScreen(navController: NavController){
                                     fontSize = 25.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     fontFamily = FontFamily.Monospace,
-                                    modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                                    modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+                                    textAlign = TextAlign.Justify
 
                                 )
 
@@ -457,6 +462,8 @@ fun TopBarItem(text: String, selected: Boolean) {
 
 @Composable
 fun BottomAppBar() {
+    val mContext = LocalContext.current
+
     NavigationBar(
         containerColor = Color.White,
         contentColor = Color.Black
@@ -483,7 +490,7 @@ fun BottomAppBar() {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "Affitto",
+                text = "Residy",
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp
@@ -499,7 +506,12 @@ fun BottomAppBar() {
                 )
             },
             selected = false,
-            onClick = { /* Handle click */ }
+            onClick = {
+                val shareIntent= Intent(Intent.ACTION_SEND)
+                shareIntent.type="text/plain"
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this housing")
+                mContext.startActivity(Intent.createChooser(shareIntent, "Share"))
+            }
         )
     }
 }
